@@ -9,3 +9,4 @@ Contains configurations for
 - telescope for grepping 
 - treesitter for my files 
 - undotree for undos and short history
+- nvim-cmp for LSP autocompletion 
