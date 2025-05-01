@@ -25,9 +25,15 @@ return require('packer').startup(function(use)
 
   use('theprimeagen/harpoon')
 
+
+  
   use('mbbill/undotree')
 
   use('tpope/vim-fugitive')
 
   use('neovim/nvim-lspconfig')
+
+  -- completion plugins 
+  use('hrsh7th/nvim-cmp') -- Completion plugin 
+  use('hrsh7th/cmp-nvim-lsp') -- lsp completion source
 end)

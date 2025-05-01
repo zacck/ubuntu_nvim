@@ -1,1 +1,2 @@
-require("zacck")
+require("zacck.packer")
+require("zacck.init")
