@@ -1,19 +1,14 @@
 local lspconfig = require('lspconfig')
 
-lspconfig.ccls.setup({
-  init_options = {
-    compilationDatabaseDirectory = ".",
-    index = {
-      threads = 0,
-    },
-    clang = {
-      excludeArgs = { "-frounding-math" }, -- Example of excluding specific compiler flags
-    },
-  }, 
-  capabilities = capabilities, 
-  filetypes = { "c", "cpp", "objc", "objcpp" },
-  root_dir = lspconfig.util.root_pattern("compile_commands.json", ".ccls", ".west")
-  })
+lspconfig.clangd.setup({
+	capabilities = capabilities, 
+	filetypes = {"c", "cpp", "objc", "objcpp"},
+	root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git", ".west"), 
+	cmd = { "clangd", "--background-index", "--clang-tidy" },
+	init_options = {
+		fallbackFlags = {"-std=c11"}, 
+	},
+})
 
 -- Configure nvim-cmp for LSP-only completion 
 local cmp = require('cmp')
@@ -25,7 +20,7 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(), -- Trigger completion
   },
   sources = {
-    { name = 'nvim_lsp' }, -- Only LSP completions from ccls
+    { name = 'nvim_lsp' }, -- Only LSP completions from clangd
   }
 })
 
