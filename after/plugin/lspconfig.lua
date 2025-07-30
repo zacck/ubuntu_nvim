@@ -12,7 +12,7 @@ lspconfig.ccls.setup({
   }, 
   capabilities = capabilities, 
   filetypes = { "c", "cpp", "objc", "objcpp" },
-  root_dir = lspconfig.util.root_pattern("compile_commands.json", ".ccls", ".git")
+  root_dir = lspconfig.util.root_pattern("compile_commands.json", ".ccls", ".west")
   })
 
 -- Configure nvim-cmp for LSP-only completion 
