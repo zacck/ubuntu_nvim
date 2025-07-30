@@ -1,5 +1,17 @@
 local lspconfig = require('lspconfig')
 
+
+-- Attach LSP functions so we can navigate code quicker
+local on_attach = function(client, bufnr)
+	--binding for go to definition
+	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
+	vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { buffer = bufnr, desc = "Go to references" })
+	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Action" })
+	vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover Documentation" })
+end 
+
+
+
 lspconfig.clangd.setup({
 	capabilities = capabilities, 
 	filetypes = {"c", "cpp", "objc", "objcpp"},
@@ -8,6 +20,7 @@ lspconfig.clangd.setup({
 	init_options = {
 		fallbackFlags = {"-std=c11"}, 
 	},
+	on_attach = on_attach,
 })
 
 -- Configure nvim-cmp for LSP-only completion 
