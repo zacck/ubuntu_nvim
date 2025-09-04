@@ -1,4 +1,5 @@
 local lspconfig = require('lspconfig')
+local util = lspconfig.util
 
 
 -- Attach LSP functions so we can navigate code quicker
@@ -16,7 +17,7 @@ lspconfig.clangd.setup({
 	capabilities = capabilities, 
 	filetypes = {"c", "cpp", "objc", "objcpp"},
 	root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git", ".west"), 
-	cmd = { "clangd", "--background-index", "--clang-tidy" },
+	cmd = { "clangd", "--background-index", "--clang-tidy","--compile-commands-dir=build" },
 	init_options = {
 		fallbackFlags = {"-std=c11"}, 
 	},
