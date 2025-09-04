@@ -11,7 +11,7 @@ return require('packer').startup(function(use)
 	'rose-pine/neovim', 
 	as = 'rose-pine', 
 	config = function()
-	   vim.cmd('colorscheme moon')
+	   vim.cmd('colorscheme rose-pine')
    	end 
   })
 
@@ -24,8 +24,26 @@ return require('packer').startup(function(use)
 
   use('theprimeagen/harpoon')
 
+  use({
+	  'MeanderingProgrammer/render-markdown.nvim', 
+	  after = { 'nvim-treesitter' }, 
+	  requires = { 'echasnovski/mini.nvim', opt = true }, 
+	  config = function()
+		  require('render-markdown').setup({
+			  latex = {
+				  enabled = true, 
+				  render_modes = false, 
+				  converter = 'latex2text',
+				  highlight = 'RenderMarkdownMath', 
+				  position = 'above', 
+				  top_pad = 0,
+				  bottom_pad = 0, 
+				  virtual = false,
+			  },
+		  })
+	  end, 
+  })
 
-  
   use('mbbill/undotree')
 
   use('tpope/vim-fugitive')
