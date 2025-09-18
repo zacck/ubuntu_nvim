@@ -9,6 +9,16 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { buffer = bufnr, desc = "Go to references" })
 	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Action" })
 	vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover Documentation" })
+
+	  -- Auto-format on save (Verible)
+	  if client.name == "verible" then
+	    vim.api.nvim_create_autocmd("BufWritePre", {
+	      buffer = bufnr,
+	      callback = function()
+		vim.lsp.buf.format({ bufnr = bufnr })
+	      end,
+	    })
+	  end
 end 
 
 
@@ -22,6 +32,16 @@ lspconfig.clangd.setup({
 		fallbackFlags = {"-std=c11"}, 
 	},
 	on_attach = on_attach,
+})
+
+-- ===============================
+-- Verilog/SystemVerilog LSP (Verible)
+-- ===============================
+lspconfig.verible.setup({
+  cmd = { "verible-verilog-ls" },  -- Make sure this is in your PATH
+  filetypes = { "verilog", "systemverilog" },
+  root_dir = util.root_pattern(".git", ".vscode", ".svn"),
+  on_attach = on_attach,
 })
 
 -- Configure nvim-cmp for LSP-only completion 
@@ -39,4 +59,5 @@ cmp.setup({
 })
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { noremap = true, silent = true})
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { noremap = true, silent = true })
 
