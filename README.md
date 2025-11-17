@@ -1,4 +1,11 @@
-My current NeoVim set up for development
+When setting up these pre requisites will help you get done faster 
+
+## Clone Packer to
+```
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+```
+
 
 
 Contains configurations for 
