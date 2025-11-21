@@ -6,6 +6,13 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 ```
 
+## NVIM-TreeSitter
+You need to isntall treesitter-cli for markdown rendering and dev
+this in turn needs
+- node 
+- npm 
+then run 
+`npm install -g tree-sitter-cli`
 
 
 Contains configurations for 
