@@ -1,5 +1,3 @@
-local lspconfig = require('lspconfig')
-local util = lspconfig.util
 
 
 -- Attach LSP functions so we can navigate code quicker
@@ -23,26 +21,32 @@ end
 
 
 
-lspconfig.clangd.setup({
+vim.lsp.config('clangd', {
 	capabilities = capabilities, 
 	filetypes = {"c", "cpp", "objc", "objcpp"},
-	root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git", ".west"), 
+	root_dir = function(bufnr, on_dir)
+		on_dir(vim.fs.root(bufnr, {"compile_commands.json", ".git", ".west"}))
+	end, 
 	cmd = { "clangd", "--background-index", "--clang-tidy","--compile-commands-dir=build" },
 	init_options = {
 		fallbackFlags = {"-std=c11"}, 
 	},
 	on_attach = on_attach,
 })
+vim.lsp.enable('clangd')
 
 -- ===============================
 -- Verilog/SystemVerilog LSP (Verible)
 -- ===============================
-lspconfig.verible.setup({
+vim.lsp.config('verible', {
   cmd = { "verible-verilog-ls" },  -- Make sure this is in your PATH
   filetypes = { "verilog", "systemverilog" },
-  root_dir = util.root_pattern(".git", ".vscode", ".svn"),
+  root_dir = function(bufnr, on_dir)
+	  on_dir(vim.fs.root(bufnr,{".git", ".vscode", ".svn"})) 
+  end,
   on_attach = on_attach,
 })
+vim.lsp.enable('verible')
 
 -- Configure nvim-cmp for LSP-only completion 
 local cmp = require('cmp')
